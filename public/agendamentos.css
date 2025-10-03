@@ -1,0 +1,345 @@
+/* Estilos para Agendamentos e Histórico */
+
+/* Cards de agendamentos */
+.appointment-card, .history-card {
+  background: white;
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #d4af37;
+  transition: all 0.3s ease;
+}
+
+.appointment-card:hover, .history-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Header dos cards */
+.appointment-header, .history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.appointment-date, .history-date {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: #333;
+}
+
+.appointment-time {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #666;
+  font-size: 0.95rem;
+}
+
+/* Status dos agendamentos */
+.appointment-status, .history-status {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.status-pendente {
+  background: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeaa7;
+}
+
+.status-confirmado {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.status-concluido {
+  background: #e2e3e5;
+  color: #383d41;
+  border: 1px solid #d6d8db;
+}
+
+.status-cancelado {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+/* Body dos cards */
+.appointment-body, .history-body {
+  margin-bottom: 20px;
+}
+
+.appointment-service, .history-service {
+  margin-bottom: 15px;
+}
+
+.appointment-service h3, .history-service h3 {
+  margin: 0 0 5px 0;
+  color: #333;
+  font-size: 1.2rem;
+}
+
+.service-price {
+  color: #d4af37;
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.appointment-barber, .history-barber {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.appointment-notes, .history-notes {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  color: #666;
+  font-style: italic;
+  margin-bottom: 10px;
+  padding: 10px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.history-created {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #999;
+  font-size: 0.85rem;
+}
+
+/* Ações dos cards */
+.appointment-actions, .history-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.appointment-actions .btn, .history-actions .btn {
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.btn--outline {
+  background: transparent;
+  border: 2px solid #d4af37 !important;
+  color: #d4af37;
+}
+
+.btn--outline:hover {
+  background: #d4af37;
+  color: white;
+}
+
+.btn--danger {
+  background: #dc3545;
+  color: white;
+}
+
+.btn--danger:hover {
+  background: #c82333;
+}
+
+.btn--primary {
+  background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%);
+  color: #1a1a1a;
+}
+
+.btn--primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
+}
+
+/* Estados vazios */
+.no-appointments, .no-history {
+  text-align: center;
+  padding: 60px 20px;
+  background: #f8f9fa;
+  border-radius: 15px;
+  border: 2px dashed #ddd;
+}
+
+.no-appointments i, .no-history i {
+  font-size: 3rem;
+  color: #ccc;
+  margin-bottom: 20px;
+}
+
+.no-appointments h3, .no-history h3 {
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.no-appointments p, .no-history p {
+  color: #999;
+  margin-bottom: 30px;
+}
+
+/* Toast notifications */
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.toast-notification {
+  animation: slideIn 0.3s ease;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .appointment-header, .history-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .appointment-actions, .history-actions {
+    justify-content: center;
+  }
+  
+  .appointment-card, .history-card {
+    padding: 15px;
+  }
+  
+  .no-appointments, .no-history {
+    padding: 40px 15px;
+  }
+  
+  .no-appointments i, .no-history i {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .appointment-actions, .history-actions {
+    flex-direction: column;
+  }
+  
+  .appointment-actions .btn, .history-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Melhorias visuais */
+.appointment-card[data-status="confirmado"] {
+  border-left-color: #28a745;
+}
+
+.appointment-card[data-status="pendente"] {
+  border-left-color: #ffc107;
+}
+
+.history-card[data-status="concluido"] {
+  border-left-color: #6c757d;
+}
+
+.history-card[data-status="cancelado"] {
+  border-left-color: #dc3545;
+}
+
+/* Animações suaves */
+.appointment-card, .history-card {
+  opacity: 0;
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+.appointment-card:nth-child(1) { animation-delay: 0.1s; }
+.appointment-card:nth-child(2) { animation-delay: 0.2s; }
+.appointment-card:nth-child(3) { animation-delay: 0.3s; }
+.appointment-card:nth-child(4) { animation-delay: 0.4s; }
+.appointment-card:nth-child(5) { animation-delay: 0.5s; }
+
+.history-card:nth-child(1) { animation-delay: 0.1s; }
+.history-card:nth-child(2) { animation-delay: 0.2s; }
+.history-card:nth-child(3) { animation-delay: 0.3s; }
+.history-card:nth-child(4) { animation-delay: 0.4s; }
+.history-card:nth-child(5) { animation-delay: 0.5s; }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Ícones coloridos */
+.appointment-date i, .history-date i {
+  color: #d4af37;
+}
+
+.appointment-time i {
+  color: #666;
+}
+
+.appointment-barber i, .history-barber i {
+  color: #d4af37;
+}
+
+.appointment-notes i, .history-notes i {
+  color: #6c757d;
+}
+
+.history-created i {
+  color: #999;
+}
+
+/* Tema escuro para cards gerados via dashboard.js */
+.theme-card {
+  background: var(--color-surface, #1e1e1e);
+  color: var(--color-text, #eaeaea);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+  border: 1px solid var(--color-border, #2a2a2a);
+}
+
+.theme-card h4 { color: var(--color-text-strong, #ffffff); margin: 0 0 8px 0; }
+.theme-card p { color: var(--color-text, #cfcfcf); margin: 6px 0; }
+
+/* Status badges no tema escuro */
+.status { display: inline-block; padding: 6px 10px; border-radius: 12px; font-weight: 600; font-size: .85rem; }
+.status-confirmado, .status-concluido { background: #1f3d2b; color: #7ddc9b; border: 1px solid #2c5a3f; }
+.status-pendente { background: #3d361f; color: #ffd666; border: 1px solid #5a4f2c; }
+.status-cancelado { background: #3d1f1f; color: #ff9e9e; border: 1px solid #5a2c2c; }
+
+/* Ajustes de listas */
+#agendamentos-lista, #historico-lista { display: grid; gap: 12px; }
+

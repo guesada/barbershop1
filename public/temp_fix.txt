@@ -1,0 +1,4 @@
+            <button class="nav-btn" onclick="showSection('historico')">
+                <i class="fas fa-history"></i> Histórico
+            </button>
+            <button class="nav-btn" onclick="showSection('perfil')">

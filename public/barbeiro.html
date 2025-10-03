@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elite Barber - Barbeiro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .barber-header {
+            background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .barber-nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .nav-btn {
+            background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%);
+            color: #1a1a1a;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            min-width: 110px;
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+        }
+        
+        .nav-btn.active {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: white;
+        }
+        
+        .barber-section {
+            display: none;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .barber-section.active {
+            display: block;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #d4af37;
+        }
+        
+        .appointments-grid {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .appointment-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .appointment-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 0.9em;
+            border-radius: 20px;
+        }
+        
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .schedule-day {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .schedule-day.today {
+            background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%);
+            color: #1a1a1a;
+        }
+        
+        .time-slots {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+            margin: 10px 0;
+        }
+        
+        .time-slot {
+            padding: 8px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 0.9em;
+        }
+        
+        .time-slot.available { background: #e8f5e8; color: #4caf50; }
+        .time-slot.booked { background: #ffebee; color: #f44336; }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #d4af37;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%);
+            color: #1a1a1a;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+        }
+        
+        .btn-danger {
+            background: #f44336;
+            color: white;
+        }
+        
+        .btn-success {
+            background: #4caf50;
+            color: white;
+        }
+        
+        .profile-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        @media (max-width: 768px) {
+            .barber-nav {
+                gap: 8px;
+            }
+            
+            .nav-btn {
+                min-width: 90px;
+                padding: 10px 15px;
+                font-size: 0.9em;
+            }
+            
+            .schedule-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="barber-header">
+        <h1><i class="fas fa-scissors"></i> Área do Barbeiro</h1>
+        <p>Gerencie sua agenda e atendimentos</p>
+        <div class="barber-nav">
+            <button class="nav-btn active" onclick="showSection('dashboard')">
+                <i class="fas fa-chart-bar"></i> Dashboard
+            </button>
+            <button class="nav-btn" onclick="showSection('agenda')">
+                <i class="fas fa-calendar"></i> Agenda
+            </button>
+            <button class="nav-btn" onclick="showSection('agendamentos')">
+                <i class="fas fa-list"></i> Agendamentos
+            </button>
+            <button class="nav-btn" onclick="showSection('perfil')">
+                <i class="fas fa-user-cog"></i> Perfil
+            </button>
+            <button class="nav-btn" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> Sair
+            </button>
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboard" class="barber-section active">
+        <h2><i class="fas fa-chart-bar"></i> Dashboard</h2>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="today-appointments">0</div>
+                <div>Agendamentos Hoje</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="week-appointments">0</div>
+                <div>Esta Semana</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="month-revenue">R$ 0</div>
+                <div>Receita do Mês</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="total-clients">0</div>
+                <div>Total de Clientes</div>
+            </div>
+        </div>
+        
+        <h3>Próximos Agendamentos</h3>
+        <div id="next-appointments"></div>
+    </div>
+
+    <!-- Agenda -->
+    <div id="agenda" class="barber-section">
+        <h2><i class="fas fa-calendar"></i> Minha Agenda</h2>
+        <div class="schedule-grid" id="schedule-grid">
+            <!-- Agenda será carregada aqui -->
+        </div>
+    </div>
+
+    <!-- Agendamentos -->
+    <div id="agendamentos" class="barber-section">
+        <h2><i class="fas fa-list"></i> Todos os Agendamentos</h2>
+        <div class="appointments-grid" id="all-appointments">
+            <!-- Agendamentos serão carregados aqui -->
+        </div>
+    </div>
+
+    <!-- Perfil -->
+    <div id="perfil" class="barber-section">
+        <h2><i class="fas fa-user-cog"></i> Meu Perfil</h2>
+        <div class="profile-section">
+            <form id="profile-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Nome</label>
+                        <input type="text" name="name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">E-mail</label>
+                        <input type="email" name="email" class="form-control" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Especialidades</label>
+                    <textarea name="specialties" class="form-control" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> Salvar
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let currentUser = null;
+        let appointments = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuth();
+            loadDashboard();
+            loadAppointments();
+            loadProfile();
+            setupProfileForm();
+        });
+
+        function checkAuth() {
+            const token = localStorage.getItem('token');
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            
+            if (!token || user.role !== 'barbeiro') {
+                window.location.href = '/';
+                return;
+            }
+            
+            currentUser = user;
+        }
+
+        function showSection(sectionName) {
+            document.querySelectorAll('.barber-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            document.getElementById(sectionName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        async function loadDashboard() {
+            try {
+                const token = localStorage.getItem('token');
+                const response = await fetch(`/api/appointments/barber/${currentUser.id}`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    updateDashboardStats(data.appointments);
+                }
+            } catch (error) {
+                console.error('Erro ao carregar dashboard:', error);
+            }
+        }
+
+        function updateDashboardStats(appointments) {
+            const today = new Date().toDateString();
+            const todayAppointments = appointments.filter(apt => 
+                new Date(apt.appointment_date).toDateString() === today
+            );
+            
+            document.getElementById('today-appointments').textContent = todayAppointments.length;
+            document.getElementById('week-appointments').textContent = appointments.length;
+        }
+
+        async function loadAppointments() {
+            try {
+                const token = localStorage.getItem('token');
+                const response = await fetch(`/api/appointments/barber/${currentUser.id}`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    appointments = data.appointments;
+                    renderAppointments();
+                }
+            } catch (error) {
+                console.error('Erro ao carregar agendamentos:', error);
+            }
+        }
+
+        function renderAppointments() {
+            const container = document.getElementById('all-appointments');
+            container.innerHTML = appointments.map(appointment => `
+                <div class="appointment-card">
+                    <div>
+                        <h4>${appointment.client_name}</h4>
+                        <p><strong>Serviço:</strong> ${appointment.service_name}</p>
+                        <p><strong>Data:</strong> ${new Date(appointment.appointment_date).toLocaleDateString('pt-BR')}</p>
+                        <p><strong>Horário:</strong> ${appointment.appointment_time}</p>
+                    </div>
+                    <div class="appointment-actions">
+                        ${appointment.status === 'agendado' ? `
+                            <button class="btn btn-success btn-small" onclick="updateStatus(${appointment.id}, 'confirmado')">
+                                Confirmar
+                            </button>
+                            <button class="btn btn-danger btn-small" onclick="updateStatus(${appointment.id}, 'cancelado')">
+                                Cancelar
+                            </button>
+                        ` : `
+                            <span class="appointment-status status-${appointment.status}">
+                                ${appointment.status.charAt(0).toUpperCase() + appointment.status.slice(1)}
+                            </span>
+                        `}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function updateStatus(appointmentId, status) {
+            try {
+                const token = localStorage.getItem('token');
+                const response = await fetch(`/api/appointments/${appointmentId}/status`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ status })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    loadAppointments();
+                    loadDashboard();
+                } else {
+                    alert('Erro ao atualizar status: ' + data.message);
+                }
+            } catch (error) {
+                console.error('Erro ao atualizar status:', error);
+            }
+        }
+
+        async function loadProfile() {
+            try {
+                const token = localStorage.getItem('token');
+                const response = await fetch(`/api/users/${currentUser.id}`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    const form = document.getElementById('profile-form');
+                    form.name.value = data.user.name || '';
+                    form.email.value = data.user.email || '';
+                    form.specialties.value = data.user.specialties || '';
+                }
+            } catch (error) {
+                console.error('Erro ao carregar perfil:', error);
+            }
+        }
+
+        // Configurar event listeners do formulário de perfil
+        function setupProfileForm() {
+            const profileForm = document.getElementById('profile-form');
+            if (profileForm) {
+                profileForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    const formData = new FormData(this);
+                    const profileData = Object.fromEntries(formData);
+                    
+                    try {
+                        const token = localStorage.getItem('token');
+                        const response = await fetch(`/api/users/${currentUser.id}`, {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${token}`
+                            },
+                            body: JSON.stringify(profileData)
+                        });
+                        
+                        const data = await response.json();
+                        
+                        if (data.success) {
+                            alert('Perfil atualizado com sucesso!');
+                        } else {
+                            alert('Erro ao atualizar perfil: ' + data.message);
+                        }
+                    } catch (error) {
+                        console.error('Erro ao atualizar perfil:', error);
+                        alert('Erro ao atualizar perfil');
+                    }
+                });
+            }
+        }
+
+        function logout() {
+            if (confirm('Tem certeza que deseja sair?')) {
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+                window.location.href = '/';
+            }
+        }
+    </script>
+</body>
+</html>
